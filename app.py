@@ -1,9 +1,10 @@
-import matplotlib.pyplot as plt
 from flask import Flask , render_template , request , redirect
 from flask_sqlalchemy import SQLAlchemy
-from numpy.core.fromnumeric import product
 from sqlalchemy import create_engine
 import pandas as pd
+import matplotlib.pyplot as plt
+import matplotlib as mpl
+from matplotlib.backends.backend_mixed import MixedModeRenderer as bm
 import time
 
 
@@ -65,7 +66,8 @@ def plot():
         X = request.form.get("X")
         Y = request.form.get("Y")
         df = pd.read_sql('SELECT * FROM sheet;' , create_engine("sqlite:///sheet.db"))
-        plt.figure(figsize=(12, 6))
+        fig = plt.figure(figsize=(12, 6))
+        canvas = bm(fig , 10 , 8 , 5.122 , mpl.backend_bases.RendererBase)
         plt.scatter(df[f"{X}"] , df[f"{Y}"] , c="red" , label="Your Graph")
         plt.xlabel(f"{X}")
         plt.ylabel(f"{Y}")
