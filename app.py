@@ -3,8 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 import pandas as pd
 import matplotlib.pyplot as plt
-import matplotlib as mpl
-from matplotlib.backends.backend_mixed import MixedModeRenderer as bm
+import mpld3
 import time
 
 
@@ -60,20 +59,20 @@ def update(sno):
     stock = Sheet.query.filter_by(sno=sno).first()
     return render_template('update.html' , stock=stock)
 
-@app.route("/post" , methods=["GET" , "POST"])
+@app.route("/plot" , methods=["GET" , "POST"])
 def plot():
     if request.method == "POST":
         X = request.form.get("X")
         Y = request.form.get("Y")
         df = pd.read_sql('SELECT * FROM sheet;' , create_engine("sqlite:///sheet.db"))
-        fig = plt.figure(figsize=(12, 6))
-        canvas = bm(fig , 10 , 8 , 5.122 , mpl.backend_bases.RendererBase)
-        plt.scatter(df[f"{X}"] , df[f"{Y}"] , c="red" , label="Your Graph")
-        plt.xlabel(f"{X}")
-        plt.ylabel(f"{Y}")
-        plt.legend()
-        plot = plt.show()
-        return redirect("/")
+        fig , ax = plt.subplots()
+        ax.scatter(df[f"{X}"] , df[f"{Y}"] , c="red" , label="Your Graph")
+        ax.set_xlabel(f"{X}")
+        ax.set_ylabel(f"{Y}")
+        html_file = open('templates/plot.html' , 'w')
+        html_file.write(mpld3.fig_to_html(fig))
+        html_file.close()
+        return render_template('plot.html')
 
     
 
