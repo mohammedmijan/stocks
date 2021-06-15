@@ -3,7 +3,7 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 import pandas as pd
 import matplotlib.pyplot as plt
-import mpld3
+import mlpd3
 import time
 
 
