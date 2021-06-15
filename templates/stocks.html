@@ -1,0 +1,115 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <title>Stocks</title>
+</head>
+<style>
+    .container {
+        background-color: burlywood;
+    }
+
+    .btn {
+        height: 1cm;
+        width: 3cm;
+        background: cornflowerblue;
+    }
+
+    .link {
+        background: darkblue;
+        color: darkgrey;
+        height: 1cm;
+        width: 3cm;
+    }
+
+    .ignore {
+        background: aqua;
+        font-weight: 200;
+        font-family: fantasy;
+        font-size: 20ex;
+        text-align: center;
+        height: 5cm;
+    }
+</style>
+<h1>Stocks!!!</h1>
+
+<body>
+
+    <div class="container">
+        <h1>Write your Stocks</h1>
+        <form action="/" method="POST">
+            <div class="row">
+                <div class="col">
+                    <label for="product_name"> Product Name:</label>
+                    <input type="text" class="ProductNameTaken" id="product_name" name="product_name">
+                </div>
+                <div class="col">
+
+                    <label for="product_quantity" name="product_per_price">Product Quantity:</label>
+                    <input type="number" class="ProductQuantityTaken" name="product_quantity">
+                </div>
+                <div class="col">
+                    <label for="product_per_price" name="product_per_price">Per Price</label>
+                    <input type="float" class="ProductPriceTaken" name="product_per_price">
+                </div>
+                <button type="submit" class="btn btn-dark">save</button>
+            </div>
+        </form>
+        <h1>Stats Your Stocks</h1>
+        <form action="/post" method="POST">
+            <label for="cars">Choose X axis :</label>
+            <select id="cars" name="X">
+                <option value="product_name">Product Name</option>
+                <option value="date_created">Date</option>
+            </select>
+            <label for="cars">Choose Y axis:</label>
+            <select id="cars" name="Y">
+                <option value="product_quantity" name="product_quantity">Product Quantity</option>
+                <option value="product_per_price" name="product_per_price">ppp</option>
+            </select>
+            <button type="submit" class="btn btn-dark">Show</button>
+
+        </form>
+        <div class="container my-3">
+            <h1>Your Stocks:</h1>
+            <table class='table'>
+                <thead>
+                    <tr>
+                        <th scope='col'>SNo</th>
+                        <th scope='col'>Date</th>
+                        <th scope='col'>Product Name</th>
+                        <th scope='col'>Product Quantity</th>
+                        <th scope='col'>Product Per Price</th>
+                        <th scope='col'>Update</th>
+                    </tr>
+                </thead>
+                </tbody>
+                {% for stock in stocks %}
+                <tr reversed>
+                    <th scope="row">{{loop.index}}</th>
+                    <td>{{stock.date_created}}</td>
+                    <td>{{stock.product_name}}</td>
+                    <td>{{stock.product_quantity}}</td>
+                    <td>{{stock.product_per_price}}</td>
+                    <td>
+                        <a href="/update/{{stock.sno}}" class="btn btn-dark" type="button">Update</a>
+                    </td>
+                </tr>
+                {% endfor %}
+                </tbody>
+            </table>
+
+        </div>
+    </div>
+    <div class="ignore">
+        Thank You.
+    </div>
+
+</body>
+
+</html>

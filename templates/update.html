@@ -1,0 +1,57 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta http-equiv="X-UA-Compatible" content="IE=edge">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
+        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
+    <title>Stocks</title>
+</head>
+<style>
+    .container {
+        background-color: burlywood;
+    }
+
+    .btn {
+        height: 1cm;
+        width: 3cm;
+        background: cornflowerblue;
+    }
+
+    .link {
+        background: darkblue;
+        color: darkgrey;
+        height: 1cm;
+        width: 3cm;
+    }
+</style>
+
+
+<body>
+
+    <div class="container">
+        <h1>Update Stocks:</h1>
+        <form action="/update/{{stock.sno}}" method="POST">
+            <div class="row">
+                <div class="col">
+                    <label for="product_name"> Product Name:</label>
+                    <input type="text" class="ProductNameTaken" id="product_name" name="product_name" value={{stock.product_name}}>
+                </div>
+                <div class="col">
+
+                    <label for="product_quantity" name="product_per_price">Product Quantity:</label>
+                    <input type="number" class="ProductQuantityTaken" name="product_quantity" value="{{stock.product_quantity}}">
+                </div>
+                <div class="col">
+                    <label for="product_per_price" name="product_per_price">Per Price</label>
+                    <input type="float" class="ProductPriceTaken" name="product_per_price" value='{{stock.product_per_price}}'>
+                </div>
+                <button type="submit" class="btn btn-dark">update</button>
+            </div>
+        </form>
+
+</body>
+
+</html>
