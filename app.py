@@ -3,8 +3,11 @@ from flask_sqlalchemy import SQLAlchemy
 from sqlalchemy import create_engine
 import pandas as pd
 import matplotlib.pyplot as plt
-import mlpd3
+import mpld3
+import numpy as np
 import time
+
+from werkzeug.utils import html
 
 
 app = Flask(__name__)
@@ -65,14 +68,32 @@ def plot():
         X = request.form.get("X")
         Y = request.form.get("Y")
         df = pd.read_sql('SELECT * FROM sheet;' , create_engine("sqlite:///sheet.db"))
-        fig , ax = plt.subplots()
-        ax.scatter(df[f"{X}"] , df[f"{Y}"] , c="red" , label="Your Graph")
-        ax.set_xlabel(f"{X}")
-        ax.set_ylabel(f"{Y}")
+        fig = plt.figure(figsize=(10 ,10))
+        plt.subplot(2 ,1 , 1)
+        plt.scatter(df[f"{X}"] , df[f"{Y}"] , c="red" , label="Your Graph")
+        plt.xlabel(f"{X}")
+        plt.ylabel(f"{Y}")
+        plt.subplot(2 , 1 , 1)
+        plt.plot(df[f"{X}"] , df[f"{Y}"] , c="green" , label="Your Graph in Plot")
+        plt.xlabel(f"{X}")
+        plt.ylabel(f"{Y}")
+        plt.subplot(2 ,1 ,2)
+        plt.hist(df[f"{Y}"] , bins=3 , histtype='bar' , label="Your Graph in Hist" , orientation='horizontal')
+        plt.title("Your Stocks In Graph" )
+        plt.ylabel(f"{Y}")
+        ticks = np.array(range(1 ,len(df[f"{X}"].unique())+1))
+        labels = np.array(df[f"{X}"].unique())
+        plt.xticks(ticks,labels=labels )
+        plt.legend()
+        plt.tight_layout()
+        plt.savefig('sheet.png')
+        plt.show()
         html_file = open('templates/plot.html' , 'w')
         html_file.write(mpld3.fig_to_html(fig))
         html_file.close()
-        return render_template('plot.html')
+        
+
+    return render_template("plot.html")
 
     
 
