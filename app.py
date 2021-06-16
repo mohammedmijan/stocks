@@ -1,13 +1,7 @@
 from flask import Flask , render_template , request , redirect
 from flask_sqlalchemy import SQLAlchemy
-from sqlalchemy import create_engine
-import pandas as pd
-import matplotlib.pyplot as plt
-import mpld3
-import numpy as np
 import time
 
-from werkzeug.utils import html
 
 
 app = Flask(__name__)
@@ -63,32 +57,6 @@ def update(sno):
 
     stock = Sheet.query.filter_by(sno=sno).first()
     return render_template('update.html' , stock=stock)
-
-@app.route("/plot" , methods=["GET" , "POST"])
-def plot():
-    if request.method == "POST":
-        X = request.form.get("X")
-        Y = request.form.get("Y")
-        df = pd.read_sql('SELECT * FROM sheet;' , create_engine("sqlite:///sheet.db"))
-        plt.figure(figsize=(10 ,10))
-        plt.scatter(df[f"{X}"] , df[f"{Y}"] , c="red" , label="Your Graph")
-        plt.xlabel(f"{X}")
-        plt.ylabel(f"{Y}")
-        plt.plot(df[f"{X}"] , df[f"{Y}"] , c="green" , label="Your Graph in Plot")
-        plt.xlabel(f"{X}")
-        plt.ylabel(f"{Y}")
-        plt.legend()
-        plt.tight_layout()
-        plt.savefig("static\sheet.jpeg")
-        
-    
-    return render_template('plot.html')
-        
-
-    
-
-    
-
 
 
 if __name__ == '__main__':

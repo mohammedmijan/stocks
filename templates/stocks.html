@@ -3,118 +3,121 @@
 
 <head>
     <meta charset="UTF-8">
-    <meta http-equiv="X-UA-Compatible" content="IE=edge">
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.0.0-beta2/dist/css/bootstrap.min.css" rel="stylesheet"
-        integrity="sha384-BmbxuPwQa2lc/FVzBcNJ7UAyJxM6wuqIj61tLrc4wSX0szH/Ev+nYRRuWlolflfl" crossorigin="anonymous">
-    <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/Chart.js/3.3.2/chart.min.js">
-    <title>Stocks</title>
+    <title>Table</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static' , filename='assets/css/bootstrap.css')}}">
+
+    <link rel="stylesheet" href="{{url_for('static' , filename='assets/vendors/iconly/bold.css')}}">
+
+    <link rel="stylesheet"
+        href="{{url_for('static' , filename='assets/vendors/perfect-scrollbar/perfect-scrollbar.css')}}">
+    <link rel="stylesheet" href="{{url_for('static' , filename='assets/vendors/bootstrap-icons/bootstrap-icons.css')}}">
+    <link rel="stylesheet" href="{{url_for('static' , filename='assets/css/app.css')}}">
+    <link rel="shortcut icon" href="{{url_for('static' , filename='assets/images/favicon.svg')}}" type="image/x-icon">
 </head>
-<style>
-    .container {
-        background-color: burlywood;
-    }
-
-    .btn {
-        height: 1cm;
-        width: 3cm;
-        background: cornflowerblue;
-    }
-
-    .link {
-        background: darkblue;
-        color: darkgrey;
-        height: 1cm;
-        width: 3cm;
-    }
-
-    .ignore {
-        background: aqua;
-        font-weight: 200;
-        font-family: fantasy;
-        font-size: 20ex;
-        text-align: center;
-        height: 5cm;
-    }
-
-    .image {
-        height: 4cm;
-        width: 9cm;
-    }
-</style>
-<h1>Stocks!!!</h1>
 
 <body>
+    <style>
+        .command {
+            text-align: center;
+            font-weight: 1000;
+            font-size: 150%;
+        }
+    </style>
+    <div class="app" style="text-align: center;">
+        <h1>Stocks</h1>
+    </div>
 
-    <div class="container">
-        <h1>Write your Stocks</h1>
-        <form action="/" method="POST" id='h1'>
-            <div class="row">
-                <div class="col">
-                    <label for="product_name"> Product Name:</label>
-                    <input type="text" class="ProductNameTaken" id="product_name" name="product_name">
-                </div>
-                <div class="col">
-
-                    <label for="product_quantity" name="product_per_price">Product Quantity:</label>
-                    <input type="number" class="ProductQuantityTaken" name="product_quantity">
-                </div>
-                <div class="col">
-                    <label for="product_per_price" name="product_per_price">Per Price</label>
-                    <input type="float" class="ProductPriceTaken" name="product_per_price">
+    <div class="card-content">
+        <div class="card-body">
+            <p class="command">
+                Update Stocks
+            </p>
+            <form action="/" method="POST" id='h1'>
+                <div class="row">
+                    <div class="col-lg-4 mb-1">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon1">PN</span>
+                            <input type="text" class="form-control" placeholder="Product Name" aria-label="Username"
+                                aria-describedby="basic-addon1">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-1">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text" id="basic-addon2"></span>
+                            <input type="number" class="form-control" placeholder="Product Quantity"
+                                aria-label="Product_quantity" aria-describedby="basic-addon2">
+                        </div>
+                    </div>
+                    <div class="col-lg-4 mb-1">
+                        <div class="input-group mb-3">
+                            <span class="input-group-text">$</span>
+                            <input type="text" class="form-control" aria-label="Amount (to the nearest money on Taka)"
+                                placeholder="Product per cost">
+                            <span class="input-group-text">.00</span>
+                        </div>
+                    </div>
                 </div>
                 <button type="submit" class="btn btn-dark">save</button>
-            </div>
-        </form>
-        <h1>Stats Your Stocks</h1>
-        <form action="/plot" method="POST" id="h2">
-            <label for="cars">Choose X axis :</label>
-            <select id="cars" name="X">
-                <option value="product_name">Product Name</option>
-                <option value="date_created">Date</option>
-            </select>
-            <label for="cars">Choose Y axis:</label>
-            <select id="cars" name="Y">
-                <option value="product_quantity" name="product_quantity">Product Quantity</option>
-                <option value="product_per_price" name="product_per_price">ppp</option>
-            </select>
-            <button type="submit" class="btn btn-dark">Show</button>
-            
-        </form>
-        <div class="container my-3">
-            <h1>Your Stocks:</h1>
-            <table class='table'>
-                <thead>
-                    <tr>
-                        <th scope='col'>SNo</th>
-                        <th scope='col'>Date</th>
-                        <th scope='col'>Product Name</th>
-                        <th scope='col'>Product Quantity</th>
-                        <th scope='col'>Product Per Price</th>
-                        <th scope='col'>Update</th>
-                    </tr>
-                </thead>
-                </tbody>
-                {% for stock in stocks %}
-                <tr reversed>
-                    <th scope="row">{{loop.index}}</th>
-                    <td>{{stock.date_created}}</td>
-                    <td>{{stock.product_name}}</td>
-                    <td>{{stock.product_quantity}}</td>
-                    <td>{{stock.product_per_price}}</td>
-                    <td>
-                        <a href="/update/{{stock.sno}}" class="btn btn-dark" type="button">Update</a>
-                    </td>
-                </tr>
-                {% endfor %}
-                </tbody>
-            </table>
-
+            </form>
         </div>
     </div>
-    <div class="ignore">
+
+    <section class="section">
+        <div class="row" id="table-borderless">
+            <div class="col-12">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">
+                            <p class="command">Your Stocks In Table</p>
+                        </h4>
+                    </div>
+                    <div class="card-content">
+                        <!-- table with no border -->
+                        <div class="table-responsive">
+                            <table class="table table-borderless mb-0">
+                                <thead>
+                                    <tr>
+                                        <th scope='col'>SNo</th>
+                                        <th scope='col'>Date</th>
+                                        <th scope='col'>Product Name</th>
+                                        <th scope='col'>Product Quantity</th>
+                                        <th scope='col'>Product Per Price</th>
+                                        <th scope='col'>Update</th>
+                                    </tr>
+                                </thead>
+                                <tbody>
+
+                                    {% for stock in stocks %}
+                                    <tr>
+                                        <td class="text-bold-500">{{loop.index}}</td>
+                                        <td class="text-bold-500">{{stock.date_created}}</td>
+                                        <td>{{stock.product_name}}</td>
+                                        <td>{{stock.product_quantity}}</td>
+                                        <td>{{stock.product_per_price}}</td>
+                                        <td>
+                                            <a href="/update/{{stock.sno}}" class="btn btn-dark"
+                                                type="button">Update</a>
+                                        </td>
+                                    </tr>
+                                    {% endfor %}
+
+                                </tbody>
+                            </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </section>
+    <div class="command">
         Thank You.
     </div>
+    <!-- Basic Tables end -->
+
 
 </body>
 
