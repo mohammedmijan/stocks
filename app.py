@@ -77,12 +77,10 @@ def plot():
         plt.plot(df[f"{X}"] , df[f"{Y}"] , c="green" , label="Your Graph in Plot")
         plt.xlabel(f"{X}")
         plt.ylabel(f"{Y}")
-        ticks = np.array(range(1 ,len(df[f"{X}"].unique())+1))
-        labels = np.array(df[f"{X}"].unique())
-        plt.xticks(ticks,labels=labels )
         plt.legend()
         plt.tight_layout()
-        plt.savefig("static\sheet.png")
+        plt.savefig("static\sheet.jpeg")
+        
     
     return render_template('plot.html')
         
