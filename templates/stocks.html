@@ -36,6 +36,11 @@
         text-align: center;
         height: 5cm;
     }
+
+    .image {
+        height: 4cm;
+        width: 9cm;
+    }
 </style>
 <h1>Stocks!!!</h1>
 
@@ -43,7 +48,7 @@
 
     <div class="container">
         <h1>Write your Stocks</h1>
-        <form action="/" method="POST">
+        <form action="/" method="POST" id='h1'>
             <div class="row">
                 <div class="col">
                     <label for="product_name"> Product Name:</label>
@@ -62,7 +67,7 @@
             </div>
         </form>
         <h1>Stats Your Stocks</h1>
-        <form action="/plot" method="POST">
+        <form action="/plot" method="POST" id="h2">
             <label for="cars">Choose X axis :</label>
             <select id="cars" name="X">
                 <option value="product_name">Product Name</option>
@@ -74,6 +79,7 @@
                 <option value="product_per_price" name="product_per_price">ppp</option>
             </select>
             <button type="submit" class="btn btn-dark">Show</button>
+            
         </form>
         <div class="container my-3">
             <h1>Your Stocks:</h1>

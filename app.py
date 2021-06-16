@@ -41,6 +41,8 @@ def stocks():
         stocks = Sheet(date_created=date_created , product_name=product_name ,product_quantity=product_quantity , product_per_price=product_per_price)
         db.session.add(stocks)
         db.session.commit()
+        return redirect('/')
+
 
     stocks = Sheet.query.all()
     return render_template('stocks.html' , stocks=stocks) 
@@ -68,12 +70,10 @@ def plot():
         X = request.form.get("X")
         Y = request.form.get("Y")
         df = pd.read_sql('SELECT * FROM sheet;' , create_engine("sqlite:///sheet.db"))
-        fig = plt.figure(figsize=(10 ,10))
-        plt.subplot(2 ,1 , 1)
+        plt.figure(figsize=(10 ,10))
         plt.scatter(df[f"{X}"] , df[f"{Y}"] , c="red" , label="Your Graph")
         plt.xlabel(f"{X}")
         plt.ylabel(f"{Y}")
-        plt.subplot(2 , 1 , 1)
         plt.plot(df[f"{X}"] , df[f"{Y}"] , c="green" , label="Your Graph in Plot")
         plt.xlabel(f"{X}")
         plt.ylabel(f"{Y}")
@@ -81,12 +81,13 @@ def plot():
         labels = np.array(df[f"{X}"].unique())
         plt.xticks(ticks,labels=labels )
         plt.legend()
-        html_file = open('templates/plot.html' , 'w')
-        html_file.write(mpld3.fig_to_html(fig))
-        html_file.close()
+        plt.tight_layout()
+        plt.savefig("static\sheet.png")
+    
+    return render_template('plot.html')
         
 
-    return render_template("plot.html")
+    
 
     
 
@@ -94,3 +95,4 @@ def plot():
 
 if __name__ == '__main__':
     app.run(port=4000 , debug=True)
+    
