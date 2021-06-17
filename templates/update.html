@@ -1,71 +1,62 @@
-<!DOCTYPE html>
-<html lang="en">
+{% extends 'base.html' %}
+{% block body %}
 
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Table</title>
+<div class="app" style="text-align: center;">
+    <h1>Stocks</h1>
+</div>
 
-    <link rel="preconnect" href="https://fonts.gstatic.com">
-    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
-    <link rel="stylesheet" href="{{url_for('static' , filename='assets/css/bootstrap.css')}}">
-
-    <link rel="stylesheet" href="{{url_for('static' , filename='assets/vendors/iconly/bold.css')}}">
-
-    <link rel="stylesheet"
-        href="{{url_for('static' , filename='assets/vendors/perfect-scrollbar/perfect-scrollbar.css')}}">
-    <link rel="stylesheet" href="{{url_for('static' , filename='assets/vendors/bootstrap-icons/bootstrap-icons.css')}}">
-    <link rel="stylesheet" href="{{url_for('static' , filename='assets/css/app.css')}}">
-    <link rel="shortcut icon" href="{{url_for('static' , filename='assets/images/favicon.svg')}}" type="image/x-icon">
-</head>
-
-<body>
-    <style>
-        .command {
-            text-align: center;
-            font-weight: 1000;
-            font-size: 150%;
-        }
-    </style>
-    <div class="app" style="text-align: center;">
-        <h1>Stocks</h1>
-    </div>
-
-    <div class="card-content">
-        <div class="card-body">
-            <p class="command">
-                Update Stocks
-            </p>
-            <form action="/" method="POST" id='h1'>
-                <div class="row">
-                    <div class="col-lg-4 mb-1">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon1">PN</span>
-                            <input type="text" class="form-control" name="product_name" placeholder="Product Name" value='{{stock.product_name}}'>
-                        </div>
-                    </div>
-                    <div class="col-lg-4 mb-1">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text" id="basic-addon2">X</span>
-                            <input type="number" name="product_quantity" class="form-control"
-                                placeholder="Product Quantity" name="product_quantity"
-                                value="{{stock.product_quantity}}">
-                        </div>
-                    </div>
-                    <div class="col-lg-4 mb-1">
-                        <div class="input-group mb-3">
-                            <span class="input-group-text">$</span>
-                            <input type="text" class="form-control" name="product_per_price"
-                                value='{{stock.product_per_price}}'>
-                            <span class="input-group-text">.00</span>
-                        </div>
+<div class="card-content">
+    <div class="card-body">
+        <p class="command">
+            Update Stocks
+        </p>
+        <form action="/update/{{stock.sno}}" method="POST">
+            <label for="card">Size</label>
+            <div class="col-lg-4 mb-1">
+                <div class="input-group mb-3">
+                    <select class="card" name="product_size" value='{{stock.product_size}}'>
+                        <option name="product_size" value="1/4">1/4 inch</option>
+                        <option name="product_size" value="3/8">3/8 inch</option>
+                        <option name="product_size" value="3/4">3/4 inch</option>
+                        <option name="product_size" value="1/2">1/2 inch</option>
+                        <option name="product_size" value="1">1 inch</option>
+                        <option name="product_size" value="1|1/2">1|1/2 inch</option>
+                        <option name="product_size" value="2">2 inch</option>
+                        <option name="product_size" value="2|1/2">2|1/2 inch</option>
+                        <option name="product_size" value="3">3 inch</option>
+                        <option name="product_size" value="4">4 inch</option>
+                        <option name="product_size" value="5">5 inch</option>
+                        <option name="product_size" value="6">6 inch</option>
+                        <option name="product_size" value="7">7 inch</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 mb-1">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">PN</span>
+                        <input type="text" class="form-control" name="product_name" value='{{stock.product_name}}'>
                     </div>
                 </div>
-                <button type="submit" class="btn btn-dark">update</button>
-            </form>
-        </div>
+                <div class="col-lg-4 mb-1">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon2">X</span>
+                        <input type="number" name="product_quantity" class="form-control"
+                            value="{{stock.product_quantity}}">
+                    </div>
+                </div>
+                <div class="col-lg-4 mb-1">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text">$</span>
+                        <input type="text" class="form-control" name="product_per_price"
+                            value='{{stock.product_per_price}}'>
+                        <span class="input-group-text">.00</span>
+                    </div>
+                </div>
+            </div>
+            <button type="submit" class="btn btn-dark">update</button>
+        </form>
     </div>
-    </div>
-</body>
-
-</html>
+</div>
+</div>
+{% endblock body %}

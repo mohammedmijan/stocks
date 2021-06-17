@@ -1,0 +1,133 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Table</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{url_for('static' , filename='assets/css/bootstrap.css')}}">
+
+    <link rel="stylesheet" href="{{url_for('static' , filename='assets/vendors/iconly/bold.css')}}">
+
+    <link rel="stylesheet"
+        href="{{url_for('static' , filename='assets/vendors/perfect-scrollbar/perfect-scrollbar.css')}}">
+    <link rel="stylesheet" href="{{url_for('static' , filename='assets/vendors/bootstrap-icons/bootstrap-icons.css')}}">
+    <link rel="stylesheet" href="{{url_for('static' , filename='assets/css/app.css')}}">
+    <link rel="shortcut icon" href="{{url_for('static' , filename='assets/images/favicon.svg')}}" type="image/x-icon">
+</head>
+
+<body>
+    <style>
+        .command {
+            text-align: center;
+            font-weight: 1000;
+            font-size: 150%;
+        }
+
+        .btn-del {
+            color: red;
+            background: rgb(255, 221, 0);
+        }
+
+        .command {
+            text-align: center;
+            font-weight: 1000;
+            font-size: 150%;
+        }
+    </style>
+    <div id="app">
+        <div id="sidebar" class="!!!!It Is A problem Solve It.!!!">
+            <div class="sidebar-wrapper active">
+                <div class="sidebar-header">
+                    <div class="d-flex justify-content-between">
+                        <div class="logo">
+                            <a href="/"><img src=" {{ url_for('static', filename='') }}" alt="Logo" srcset=""></a>
+                        </div>
+                        <div class="toggler">
+                            <a href="#" class="sidebar-hide d-xl-none d-block"><i class="bi bi-x bi-middle"></i></a>
+                        </div>
+                    </div>
+                </div>
+                <div class="sidebar-menu">
+                    <ul class="menu">
+                        <li class="sidebar-title">Menu</li>
+                        <li class="sidebar-item">
+                            <a href="/" class='sidebar-link'>
+                                <i class="bi bi-stack"></i>
+                                <span>Stocks</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="/show_daily_stocks" class='sidebar-link'>
+                                <i class="bi bi-stack"></i><span>Record Today Stocks</span>
+                            </a>
+                        </li>
+                        <li class="sidebar-item">
+                            <a href="/show_30days_stocks" class='sidebar-link'>
+                                <i class="bi bi-stack"></i><span>Last 30 Days Stocks</span>
+                            </a>
+                        </li>
+                    </ul>
+                </div>
+                <button class="sidebar-toggler btn x"><i data-feather="x"></i></button>
+            </div>
+        </div>
+    </div>
+    <div id="main">
+        <div class="page-heading">
+            {% block body %}
+
+
+            {% endblock %}
+            <section class="section">
+                <div class="card">
+                    <div class="card-header">
+                        <h4 class="card-title">Stock Navigation</h4>
+                    </div>
+                    <div class="card-body">
+                        <div class="my-5">
+                            <ul class="row row-cols-2 row-cols-sm-3 row-cols-lg-4 row-cols-xl-6 list-unstyled list">
+                                <li class="col-6 col-lg-4 col-md-3 col-2 mb-4" data-tags="alarm clock">
+                                    <div class="p-3 py-4 mb-2 bg-light text-center rounded">
+                                        <svg class="bi" width="1em" height="1em" fill="currentColor">
+                                            <use
+                                                xlink:href="{{ url_for('static', filename='assets/vendors/bootstrap-icons/bootstrap-icons.svg#alarm-fill') }}" />
+                                        </svg>
+                                    </div>
+                                    <div class="name text-muted text-decoration-none text-center pt-1">
+                                        <a href="/show_daily_stocks" rel="noopener noreferrer">
+                                            Show Today Stocks</a>
+                                    </div>
+                                </li>
+                                <li class="col-6 col-lg-4 col-md-3 col-2 mb-4" data-tags="alarm clock">
+                                    <div class="p-3 py-4 mb-2 bg-light text-center rounded">
+                                        <svg class="bi" width="1em" height="1em" fill="currentColor">
+                                            <use
+                                                xlink:href="{{ url_for('static', filename='assets/vendors/bootstrap-icons/bootstrap-icons.svg#alarm-fill') }}" />
+                                        </svg>
+                                    </div>
+                                    <div class="name text-muted text-decoration-none text-center pt-1">
+                                        <a href="/show_30days_stocks" rel="noopener noreferrer">
+                                            Last 30 Days Stocks</a>
+                                    </div>
+                                </li>
+                            </ul>
+                        </div>
+                    </div>
+                </div>
+            </section>
+            <div class="name text-muted text-decoration-none text-center pt-1">
+                <a href="/" rel="noopener noreferrer">
+                    Make Stock</a>
+            </div>
+            <div class="command">
+                Thank You.
+            </div>
+        </div>
+    </div>
+</body>
+
+</html>

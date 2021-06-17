@@ -1,0 +1,47 @@
+{% extends 'base.html' %}
+{% block body %}
+<section class="section">
+    <div class="row" id="table-borderless">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        <p class="command">Your Stocks In Table</p>
+                    </h4>
+                </div>
+                <div class="card-content">
+                    <!-- table with no border -->
+                    <div class="table-responsive">
+                        <table class="table table-borderless mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope='col'>SNo</th>
+                                    <th scope='col'>Date</th>
+                                    <th scope='col'>Product Size</th>
+                                    <th scope='col'>Product Name</th>
+                                    <th scope='col'>Product Quantity</th>
+                                    <th scope='col'>Product Per Price</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+
+                                {% for stock in stocks %}
+                                <tr>
+                                    <td class="text-bold-500">{{loop.index}}</td>
+                                    <td class="text-bold-500">{{stock.date_created}}</td>
+                                    <td class="text-bold-500">{{stock.product_size}} inch</td>
+                                    <td>{{stock.product_name}}</td>
+                                    <td>{{stock.product_quantity}}</td>
+                                    <td>{{stock.product_per_price}}</td>
+                                </tr>
+                                {% endfor %}
+
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}
