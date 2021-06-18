@@ -76,8 +76,8 @@
             </div>
         </div>
     </div>
-    <div id="main">
-        <div class="page-heading">
+    <div id="#main">
+        <div class="#page-heading">
             {% block body %}
 
 
@@ -112,6 +112,18 @@
                                     <div class="name text-muted text-decoration-none text-center pt-1">
                                         <a href="/show_30days_stocks" rel="noopener noreferrer">
                                             Last 30 Days Stocks</a>
+                                    </div>
+                                </li>
+                                <li class="col-6 col-lg-4 col-md-3 col-2 mb-4" data-tags="alarm clock">
+                                    <div class="p-3 py-4 mb-2 bg-light text-center rounded">
+                                        <svg class="bi" width="1em" height="1em" fill="currentColor">
+                                            <use
+                                                xlink:href="{{ url_for('static', filename='assets/vendors/bootstrap-icons/bootstrap-icons.svg#alarm-fill') }}" />
+                                        </svg>
+                                    </div>
+                                    <div class="name text-muted text-decoration-none text-center pt-1">
+                                        <a href="/all_stocks" rel="noopener noreferrer">
+                                            Whole Stocks</a>
                                     </div>
                                 </li>
                             </ul>

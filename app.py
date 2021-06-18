@@ -88,6 +88,8 @@ def todayStock():
     engine=create_engine('sqlite:///TDS.db')
     Server_of_today.to_sql('TDS' , engine , if_exists='replace')
 
+
+
 #Calling Pages
 @app.route('/' , methods=['GET', 'POST'])
 def stocks():
@@ -102,6 +104,13 @@ def stocks():
         db.session.commit()
     return render_template("stocks.html")
         
+
+
+@app.route("/all_stocks")
+def all_stocks():
+    stocks = Sheet.query.all()
+    return render_template('all_stocks.html' , stocks=stocks) 
+
 
 @app.route("/show_daily_stocks")
 def show_daily_stocks():
