@@ -2,15 +2,15 @@
 {% block body %}
 
 <div class="app" style="text-align: center;">
-    <h1>Stocks</h1>
+    <h1>Include Products</h1>
 </div>
 
 <div class="card-content">
     <div class="card-body">
         <p class="command">
-            Update Stocks
+            Update Products
         </p>
-        <form action="/update/{{stock.sno}}" method="POST">
+        <form action="/update_products/{{stock.sno}}" method="POST">
             <label for="card">Size</label>
             <div class="col-lg-4 mb-1">
                 <div class="input-group mb-3">
@@ -38,25 +38,10 @@
                         <input type="text" class="form-control" name="product_name" value='{{stock.product_name}}'>
                     </div>
                 </div>
-                <div class="col-lg-4 mb-1">
-                    <div class="input-group mb-3">
-                        <span class="input-group-text" id="basic-addon2">X</span>
-                        <input type="number" name="product_quantity" class="form-control"
-                            value="{{stock.product_quantity}}">
-                    </div>
-                </div>
-                <div class="col-lg-4 mb-1">
-                    <div class="input-group mb-3">
-                        <span class="input-group-text">$</span>
-                        <input type="text" class="form-control" name="product_per_price"
-                            value='{{stock.product_per_price}}'>
-                        <span class="input-group-text">.00</span>
-                    </div>
-                </div>
             </div>
             <button type="submit" class="btn btn-dark">update</button>
         </form>
     </div>
 </div>
-</div>
+
 {% endblock body %}

@@ -1,0 +1,93 @@
+{% extends 'base.html' %}
+{% block body %}
+
+<div class="app" style="text-align: center;">
+    <h1>Include Products</h1>
+</div>
+
+<div class="card-content">
+    <div class="card-body">
+        <p class="command">
+            Product Include
+        </p>
+        <form action="/includings_of_products" method="POST" id='h1'>
+            <label for="card">Size</label>
+            <div class="col-lg-4 mb-1">
+                <div class="input-group mb-3">
+                    <select class="card" name="product_size">
+                        <option name="product_size" value="1/4">1/4 inch</option>
+                        <option name="product_size" value="3/8">3/8 inch</option>
+                        <option name="product_size" value="3/4">3/4 inch</option>
+                        <option name="product_size" value="1/2">1/2 inch</option>
+                        <option name="product_size" value="1">1 inch</option>
+                        <option name="product_size" value="1|1/2">1|1/2 inch</option>
+                        <option name="product_size" value="2">2 inch</option>
+                        <option name="product_size" value="2|1/2">2|1/2 inch</option>
+                        <option name="product_size" value="3">3 inch</option>
+                        <option name="product_size" value="4">4 inch</option>
+                        <option name="product_size" value="5">5 inch</option>
+                        <option name="product_size" value="6">6 inch</option>
+                        <option name="product_size" value="7">7 inch</option>
+                    </select>
+                </div>
+            </div>
+            <div class="row">
+                <div class="col-lg-4 mb-1">
+                    <div class="input-group mb-3">
+                        <span class="input-group-text" id="basic-addon1">PN</span>
+                        <input type="text" class="form-control" placeholder="Product Name" name="product_name">
+                    </div>
+                </div>
+            </div>
+        <p class="problems">Please ensure Product Size</p>
+        <p class="problems">Please ensure appropiate Product Name</p>
+        <button type="submit" class="btn btn-dark">save</button>
+    </form>
+    </div>
+</div>
+<p class="problems"></p>
+
+
+<section class="section">
+    <div class="row" id="table-borderless">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-header">
+                    <h4 class="card-title">
+                        <p class="command">Products Table</p>
+                    </h4>
+                </div>
+                <div class="card-content">
+                    <!-- table with no border -->
+                    <div class="table-responsive">
+                        <table class="table table-borderless mb-0">
+                            <thead>
+                                <tr>
+                                    <th scope='col'>SNo</th>
+                                    <th scope='col'>Product Size</th>
+                                    <th scope='col'>Product Name</th>
+                                    <th scope='col'>Update</th>
+                                    <th scope='col'>Remove</th>
+                                </tr>
+                            </thead>
+                            <tbody>
+                                {% for stock in stocks %}
+                                <tr>
+                                    <td class="text-bold-500">{{loop.index}}</td>
+                                    <td>{{stock.product_size}}</td>
+                                    <td>{{stock.product_name}}</td>
+                                    <td>
+                                        <a href="/update_products/{{stock.sno}}" class="btn btn-dark" type="button">Update</a>
+                                    </td>
+                                    <td><a href="/delete_products/{{stock.sno}}" class="btn-del">!Remove</a></td>
+                                </tr>
+                                {% endfor %}
+                            </tbody>
+                        </table>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+{% endblock body %}
