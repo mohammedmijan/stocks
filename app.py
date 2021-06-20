@@ -316,7 +316,7 @@ def blog_show_react(sno):
         react_ = reacts(sno_=sno , react=react)
         db.session.add(react_)
         db.session.commit()
-        return redirect("/")
+        return redirect("/blog_show")
 
 
 
