@@ -1,41 +1,45 @@
 {% extends 'base.html' %}
 {% block body %}
 <section class="section">
-    <div class="row" id="table-borderless">
+    <div class="row" id="table-bordered">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">
-                        <p class="command">Your Stocks In Table</p>
-                    </h4>
+                    <h4 class="command">Stocks</h4>
                 </div>
                 <div class="card-content">
-                    <!-- table with no border -->
+                    <div class="card-body">
+                        <p class="command">All Stocks
+                        </p>
+                    </div>
+                    <!-- table bordered -->
                     <div class="table-responsive">
-                        <table class="table table-borderless mb-0">
-                            <thead>
-                                <tr>
-                                    <th scope='col'>SNo</th>
-                                    <th scope='col'>Date</th>
-                                    <th scope='col'>Product Size</th>
-                                    <th scope='col'>Product Name</th>
-                                    <th scope='col'>Product Quantity</th>
-                                    <th scope='col'>Product Per Price</th>
+                        <table class="table table-bordered mb-0">
+                            <tr>
+                                    <th >SNo</th>
+                                    <th >Date</th>
+                                    <th >Product Size</th>
+                                    <th >Product Name</th>
+                                    <th >Product Quantity</th>
+                                    <th >Product Per Price</th>
                                 </tr>
+
+
+
+
                             </thead>
                             <tbody>
-
                                 {% for stock in stocks %}
                                 <tr>
-                                    <td class="text-bold-500">{{loop.index}}</td>
-                                    <td class="text-bold-500">{{stock.date_created}}</td>
-                                    <td class="text-bold-500">{{stock.product_size}} inch</td>
+                                    <td>{{loop.index}}</td>
+                                    <td>{{stock.date_created}}</td>
+                                    <td>{{stock.product_size}} inch</td>
                                     <td>{{stock.product_name}}</td>
                                     <td>{{stock.product_quantity}}</td>
                                     <td>{{stock.product_per_price}}</td>
                                 </tr>
                                 {% endfor %}
-
+                                
                             </tbody>
                         </table>
                     </div>

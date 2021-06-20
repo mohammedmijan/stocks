@@ -1,5 +1,3 @@
-from operator import index
-import re
 from flask import Flask , render_template , request , redirect
 from flask_sqlalchemy import SQLAlchemy
 import time
@@ -17,6 +15,8 @@ app.config["SQLALCHEMY_BINDS"] = {'two' : 'sqlite:///LTDS.db' ,    #Last thirty 
                                 'three' : 'sqlite:///TDS.db'  ,      # Today Stocks Database
                                 'four' : 'sqlite:///products.db', # products items
                                 'five' : 'sqlite:///products_database.db', #Individual Product saving for a while
+                                "blog_post" : "sqlite:///database/blog_post.db"  , #Blog and Post 
+                                'react':"sqlite:///database/reacts.db" , #React to Database
                                 }     
 app.config['SQLALCHEMY_TRACK_MODIFICATIONS'] = False
 
@@ -158,19 +158,15 @@ def stocks():
         stocks = Sheet(product_size=product_size, date_created=date_created , product_name=product_name.lower() ,product_quantity=product_quantity , product_per_price=product_per_price)
         db.session.add(stocks)
         db.session.commit()
-    return render_template("stocks.html")
+    todayStock()
+    stocks = TDS.query.all()
+    return render_template('stocks.html' , stocks=stocks) 
 
 @app.route("/all_stocks")
 def all_stocks():
     stocks = Sheet.query.all()
     return render_template('all_stocks.html' , stocks=stocks) 
         
-
-@app.route("/show_daily_stocks")
-def show_daily_stocks():
-    todayStock()
-    stocks = TDS.query.all()
-    return render_template('show_daily_stocks.html' , stocks=stocks) 
 
 @app.route("/show_30days_stocks")
 def show_30days_stocks():
@@ -256,7 +252,7 @@ def delete(sno):
     stock = Sheet.query.filter_by(sno=sno).first()
     db.session.delete(stock)
     db.session.commit()
-    return redirect("/show_daily_stocks")
+    return redirect("/")
 
 
 @app.route('/delete_products/<int:sno>')
@@ -268,6 +264,60 @@ def delete_products(sno):
 
 
 #End Delete Place
+
+
+
+
+#Blog Post   -------   Blog Post
+
+
+
+class blog_post(db.Model):
+    __bind__key_ = "blog_post"
+    sno = db.Column(db.Integer , primary_key=True)
+    address = db.Column(db.String(200))
+    post = db.Column(db.String(1000) , nullable=False)
+    
+
+    def __repr__ (self) -> str:
+        return f"{self.sno}"
+
+@app.route("/blog_post" , methods=["GET" , "POST"])
+def blog_post_():
+    if request.method == "POST":
+        address = request.form["address"]
+        post = request.form["post"]
+        post_blog = blog_post(address=address , post=post)
+        db.session.add(post_blog)
+        db.session.commit()
+
+    posts = blog_post.query.all()
+    return render_template("dist/blog_post.html" , posts=posts)
+
+class reacts(db.Model):
+    __bind_key__ = 'react'
+    sno = db.Column(db.Integer , primary_key=True)
+    sno_ = db.Column(db.Integer)
+    react = db.Column(db.String(100))
+    
+
+    def __repr__ (self) -> str:
+        return f"{self.sno}"
+
+@app.route("/blog_show" , methods=["GET" , "POST"])
+def blog_show_():
+    posts = blog_post.query.all()
+    return render_template("dist/blog_show.html" , posts=posts)
+
+@app.route("/<int:sno>" , methods=["GET" , "POST"])
+def blog_show_react(sno):
+    if request.method == "POST":
+        react = request.form.get("react")
+        react_ = reacts(sno_=sno , react=react)
+        db.session.add(react_)
+        db.session.commit()
+        return redirect("/")
+
 
 
 if __name__ == '__main__':

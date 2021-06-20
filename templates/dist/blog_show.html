@@ -1,0 +1,89 @@
+<!DOCTYPE html>
+<html lang="en">
+
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>Blogs</title>
+
+    <link rel="preconnect" href="https://fonts.gstatic.com">
+    <link href="https://fonts.googleapis.com/css2?family=Nunito:wght@300;400;600;700;800&display=swap" rel="stylesheet">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/bootstrap.css') }}">
+
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='assets/vendors/perfect-scrollbar/perfect-scrollbar.css') }}">
+    <link rel="stylesheet"
+        href="{{ url_for('static', filename='assets/vendors/bootstrap-icons/bootstrap-icons.css') }}">
+    <link rel="stylesheet" href="{{ url_for('static', filename='assets/css/app.css') }}">
+    <link rel="shortcut icon" href="{{ url_for('static', filename='assets/images/favicon.svg') }}" type="image/x-icon">
+</head>
+
+<body>
+    <style>
+        .address
+{
+    color: rgb(140, 218, 137);
+}
+
+    </style>
+    <div class="page-heading">
+        <div class="page-title">
+            <div class="row">
+                <div class="col-12 col-md-6 order-md-1 order-last">
+                    <h3>Blog Post </h3>
+                    <p class="text-subtitle text-muted">Explore Our Services
+                    </p>
+                </div>
+                <div class="col-12 col-md-6 order-md-2 order-first">
+                    <nav aria-label="breadcrumb" class="breadcrumb-header float-start float-lg-end">
+                        <ol class="breadcrumb">
+                            <li class="breadcrumb-item"><a href="/blog_post">Post</a></li>
+                        </ol>
+                    </nav>
+                </div>
+            </div>
+        </div>
+       <h3></h3>
+    </div>
+{% for post in posts %}
+<div class="container">
+    <section class="section">
+        <div class="row">
+            <div class="col-md-6">
+                <div class="card">
+                    <div class="card-header">
+                        <h4>Businessman Experience</h4>
+                        <p class="address">{{post.address}}</p>
+                        <p>{{post.post}}</p>
+                    <div class="row" style="float: right;">
+                <form action="/{{post.sno}}" method="post">
+                    <input type="submit"  value="Good" class="btn btn-info rounded-pill" name="react">
+                    <input type="submit" value="Bad" class="btn btn-info rounded-pill" name="react">
+                </form>
+                </div>
+                </div>
+                </div>
+            </div>
+        </div>
+    </section>
+</div>
+{% endfor %}
+    <footer>
+        <div class="footer clearfix mb-0 text-muted">
+            <div class="float-start">
+                <p>2021 &copy; Mizan</p>
+            </div>
+            <div class="float-end">
+                <p>A. Saugi [Mazer]</p>
+            </div>
+        </div>
+    </footer>
+
+    <script
+        src="{{ url_for('static', filename='assets/vendors/perfect-scrollbar/perfect-scrollbar.min.js') }}"></script>
+    <script src="{{ url_for('static', filename='assets/js/bootstrap.bundle.min.js') }}"></script>
+
+    <script src="{{ url_for('static', filename='assets/js/main.js') }}"></script>
+</body>
+
+</html>

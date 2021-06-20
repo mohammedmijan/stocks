@@ -1,19 +1,21 @@
 {% extends 'base.html' %}
 {% block body %}
 <section class="section">
-    <div class="row" id="table-borderless">
+    <div class="row" id="table-bordered">
         <div class="col-12">
             <div class="card">
                 <div class="card-header">
-                    <h4 class="card-title">
-                        <p class="command">Your Stocks In Table</p>
-                    </h4>
+                    <h4 class="command">Stocks</h4>
                 </div>
                 <div class="card-content">
-                    <!-- table with no border -->
+                    <div class="card-body">
+                        <p class="command">30 Days Stocks
+                        </p>
+                    </div>
+                    <!-- table bordered -->
                     <div class="table-responsive">
-                        <table class="table table-borderless mb-0">
-                            <thead>
+                        <table class="table table-bordered mb-0">
+                            
                                 <tr>
                                     <th scope='col'>SNo</th>
                                     <th scope='col'>Date</th>
