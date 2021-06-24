@@ -9,11 +9,12 @@
                 </div>
                 <div class="card-content">
                     <div class="card-body">
-                        <p class="command">All Stocks
+                        <p class="command">Individual Products
                         </p>
                     </div>
                     <!-- table bordered -->
                     <div class="table-responsive">
+                        <div class="reversed">
                         <table class="table table-bordered mb-0">
                             <tr>
                                     <th >SNo</th>
@@ -29,16 +30,67 @@
 
                             </thead>
                             <tbody>
-                                {% for stock in stocks %}
+                                {% for stock in stocks1 %}
                                 <tr>
-                                    <td>{{loop.index}}</td>
-                                    <td>{{stock.date_created}}</td>
-                                    <td>{{stock.product_size}} inch</td>
+                                    <td class="text-bold-500">{{loop.index}}</td>
+                                    <td class="text-bold-500">{{stock.date_created}}</td>
+                                    <td class="text-bold-500">{{stock.product_size}} inch</td>
                                     <td>{{stock.product_name}}</td>
                                     <td>{{stock.product_quantity}}</td>
                                     <td>{{stock.product_per_price}}</td>
                                 </tr>
                                 {% endfor %}
+
+                                
+                            </tbody>
+                        </table>
+                        </div>
+                    </div>
+                </div>
+            </div>
+        </div>
+    </div>
+</section>
+
+
+<section class="section">
+    <div class="row" id="table-bordered">
+        <div class="col-12">
+            <div class="card">
+                <div class="card-content">
+                    <div class="card-body">
+                        <p class="command">All Stocks
+                        </p>
+                    </div>
+                    <!-- table bordered -->
+                    <div class="table-responsive">
+                        <table class="table table-bordered mb-0">
+                            
+                            <tr>
+                                    <th scope='col'>SNo</th>
+                                    <th scope='col'>Date</th>
+                                    <th scope='col'>Product Size</th>
+                                    <th scope='col'>Product Name</th>
+                                    <th scope='col'>Product Quantity</th>
+                                    <th scope='col'>Product Per Price</th>
+                                </tr>
+
+
+
+
+                            </thead>
+                            <tbody>
+                                {% for stock in stocks %}
+                                <tr>
+                                    <td class="text-bold-500">{{loop.index}}</td>
+                                    <td class="text-bold-500">{{stock.date_created}}</td>
+                                    <td class="text-bold-500">{{stock.product_size}} inch</td>
+                                    <td>{{stock.product_name}}</td>
+                                    <td>{{stock.product_quantity}}</td>
+                                    <td>{{stock.product_per_price}}</td>
+                                </tr>
+                                {% endfor %}
+
                                 
                             </tbody>
                         </table>

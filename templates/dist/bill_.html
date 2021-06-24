@@ -1,0 +1,64 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta http-equiv="X-UA-Compatible" content="IE=edge">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Bill</title>
+</head>
+<body>
+  
+<table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;">
+      <th>Customer Shop Number</th>
+      <th>Customer Name</th>
+      <th>Customer Phone Number</th>
+      <th>Customer Mail</th>
+    </tr>
+  </thead>
+  <tbody>
+    
+      {% for bill_frame1 in bill_frame1_ %}
+      <tr>
+      <td>{{bill_frame1.customer_shop_number}}</td>
+      <td>{{bill_frame1.customer_name}}</td>
+      <td>{{bill_frame1.customer_phone_number}}</td>
+      <td>{{bill_frame1.customer_mail}}</td>
+    </tr>
+      {% endfor %}
+    
+  </tbody>
+  </table>
+  <table border="1" class="dataframe">
+  <thead>
+    <tr style="text-align: right;width: 30cm;">
+      <th>Sno</th>
+      <th>Size</th>
+      <th>Product Name</th>
+      <th>Peice</th>
+      <th>Per Price</th>
+      <th>Price</th>
+    </tr>
+  </thead>
+
+
+  <tbody>
+    {% for bill_frame2 in bill_frame2_ %}
+    <tr style="width: 30cm;">
+      <td>{{loop.index}}</td>
+      <td>{{bill_frame2.product_size}}</td>
+      <td>{{bill_frame2.product_name}}</td>
+      <td>{{bill_frame2.product_peice}}</td>
+      <td>{{bill_frame2.product_per_price}}</td>
+      <td>{{bill_frame2.product_price}}</td>
+    </tr>
+  </tbody>
+  {% endfor %}
+</table>
+<form action="/bill_" method="POST">
+<button type="submit">Send</button>
+</form>
+
+</body>
+</html>
