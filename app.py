@@ -102,7 +102,7 @@ class total(db.Model):
 
 
     def __repr__(self) -> str:
-        return f'{self.sno}'
+        return f'{self.index}'
 
 class bill(db.Model):
     __bind_key__ = "bill"
@@ -176,7 +176,7 @@ class bill(db.Model):
 
 
     def __repr__(self) -> str:
-        return f"{self.customer_name} {self.phone_number}{self.product_name1}{self.product_price1}"
+        return f"{self.index}"
 
 #End DataBase Conectivity
 #
@@ -207,7 +207,7 @@ def todayStock():
     Index_DataFrame = [k for k in range(len(server_date)) if np.array(DataFrame_date.isin(today).loc[:, ["date_created"]])[k]== True]
     Server_of_today = pd.DataFrame(list(df.values[i] for i in Index_DataFrame) , columns=df.columns)
     engine=create_engine('sqlite:///TDS.db')
-    Server_of_today.to_sql('TDS' , engine , if_exists='replace')
+    Server_of_today.to_sql('TDS' , engine , if_exists='replace' , index=False)
 
 def product_database_function(size , name):
     df1 = pd.read_sql("SELECT * FROM products" , create_engine("sqlite:///products.db"))
@@ -224,7 +224,7 @@ def product_database_function(size , name):
         if len(list_of_search) != 0:
             Server_of_products = pd.DataFrame(list(df2.values[list_of_search[i]] for i in range(len(list_of_search))) , columns=df2.columns , index=None)
             engine = create_engine("sqlite:///products_database.db")
-            Server_of_products.to_sql("products_database" , engine , if_exists='replace')
+            Server_of_products.to_sql("products_database" , engine , if_exists='replace' , index=False)
 
 def litte_search_engine_2(size , name):
     df1 = pd.read_sql("SELECT * FROM products" , create_engine("sqlite:///products.db"))
@@ -252,7 +252,7 @@ def update_quantity(size , name , new_quantity , product_per_price):
         "product_per_price" : product_per_price ,
         "date_created" : date1
         } , index=np.array(range(m , m+1)))
-        df.to_sql("total" , create_engine("sqlite:///total.db") , if_exists="append")
+        df.to_sql("total" , create_engine("sqlite:///total.db") , if_exists="append" , index=False)
     elif m == 1:
         df1 = df1.drop(index=number)
         add_quantity = new_quantity + server_product_quantity_number[m-1]
@@ -267,7 +267,7 @@ def update_quantity(size , name , new_quantity , product_per_price):
         df3 = df2.drop(columns='index')
         df4 = df3.ilos[::-1]
         print(df4)
-        df4.to_sql("total" , create_engine("sqlite:///total.db") , if_exists="replace")
+        df4.to_sql("total" , create_engine("sqlite:///total.db") , if_exists="replace" , index=False)
     
 def update_quantity_minus(size , name , new_quantity , product_per_price):
     df1 = pd.read_sql("SELECT * FROM total;" , create_engine("sqlite:///total.db"))
@@ -287,7 +287,7 @@ def update_quantity_minus(size , name , new_quantity , product_per_price):
         "product_per_price" : product_per_price ,
         "date_created" : date1
         } , index=np.array(range(m , m+1)))
-        df.to_sql("total" , create_engine("sqlite:///total.db") , if_exists="append")
+        df.to_sql("total" , create_engine("sqlite:///total.db") , if_exists="append" , index=False)
     elif m == 1:
         df1 = df1.drop(index=number)
         add_quantity = server_product_quantity_number[m-1] - new_quantity
@@ -300,7 +300,7 @@ def update_quantity_minus(size , name , new_quantity , product_per_price):
         })
         df2 = pd.concat([df , df1] ,axis=0)
         df3 = df2.drop(columns='index')
-        df3.to_sql("total" , create_engine("sqlite:///total.db") , if_exists="replace")
+        df3.to_sql("total" , create_engine("sqlite:///total.db") , if_exists="replace" , index=False)
     
 def reversed_sheet():
     df = pd.read_sql("sheet" , create_engine("sqlite:///sheet.db"))
@@ -323,7 +323,7 @@ def stocks():
         stocks = Sheet(product_size=product_size, date_created=date_created , product_name=product_name.lower() ,product_quantity=product_quantity , product_per_price=product_per_price)
         db.session.add(stocks)
         db.session.commit()
-        update_quantity(size=product_size , name=product_name.lower() , new_quantity=product_quantity , product_per_price=product_per_price)
+        update_quantity(size=product_size , name=product_name.lower() , new_quantity=int(product_quantity) , product_per_price=product_per_price)
         
     todayStock()
     stocks = TDS.query.all()
@@ -391,7 +391,7 @@ def update_main(sno):
         n_Sheet.product_per_price = product_per_price
         db.session.add(n_Sheet)
         db.session.commit()
-        return redirect('/show_daily_stocks')
+        return redirect('/')
 
     stock = Sheet.query.filter_by(sno=sno).first()
     return render_template('update.html' , stock=stock)
@@ -633,7 +633,7 @@ def bill_frame():
 
 
 def send_bill():
-    url = "http://127.0.0.1:4000/bill_"
+    url = "http://stocks-mijan.herokuapp.com/bill_" #"http://127.0.0.1:4000/bill_"
     config = pdfkit.configuration(wkhtmltopdf=b"wkhtmltox\\bin\\wkhtmltopdf.exe")
     pdfkit.from_url(url , "templates/dist/bill_.pdf" , configuration=config , options={
             'page-size': 'A4',
@@ -685,11 +685,12 @@ def update_quantity(size , name , new_quantity , product_per_price):
     
 
 def update_all():
+    df1 = pd.read_sql("SELECT * FROM total;" , create_engine("sqlite:///total.db"))
     df = pd.read_sql("SELECT * FROM bill_frame2;" , create_engine("sqlite:///bill_frame2.db"))
     #print(df.values[0])
     for i  in range(0 ,len(df.index)):
         prod = df.values[i]
-        if prod[1] != '':
+        if prod[1] != '' and np.array(df1["product_name"])[i] in np.array(df["product_name"]):
             update_quantity(size=prod[2] , name=prod[1] , new_quantity=int(prod[3]) , product_per_price=prod[4])
 
 
@@ -734,7 +735,7 @@ def bill_frame_page():
 
 
 class blog_post(db.Model):
-    __bind__key_ = "blog_post"
+    __bind_key__ = "blog_post"
     sno = db.Column(db.Integer , primary_key=True)
     address = db.Column(db.String(200))
     post = db.Column(db.String(1000) , nullable=False)
